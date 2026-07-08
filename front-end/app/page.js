@@ -1,46 +1,49 @@
-// app/page.js
+// components/Navbar.js
+import Link from 'next/link';
 import { fetchAPI } from '../lib/api';
 
-// The GraphQL query to get our posts
-const GET_LATEST_NEWS = `
-  query GetLatestNews {
-    posts(first: 5) {
+const GET_ALL_CATEGORIES = `
+  query GetAllCategories {
+    categories(first: 100) {
       nodes {
         id
-        title
-        date
-        excerpt
+        name
+        slug
+        count
       }
     }
   }
 `;
 
-export default async function Home() {
-  // Fetch the data on the server
-  const data = await fetchAPI(GET_LATEST_NEWS);
-  const posts = data.posts.nodes;
+export default async function Navbar() {
+  const data = await fetchAPI(GET_ALL_CATEGORIES);
+  const allCategories = data.categories.nodes;
+
+  // Filter out empty categories and the default "Uncategorized"
+  const activeCategories = allCategories.filter(
+    (cat) => cat.slug !== 'uncategorized' && cat.count > 0
+  );
 
   return (
-    <main className="p-10">
-      <h1 className="text-4xl font-bold mb-8">Astha News Portal</h1>
-      
-      <div className="grid gap-6">
-        {posts.map((post) => (
-          <article key={post.id} className="p-6 border border-gray-200 rounded-lg shadow-sm">
-            <h2 className="text-2xl font-semibold mb-2">{post.title}</h2>
-            
-            {/* Rendering the raw HTML excerpt safely */}
-            <div 
-              className="text-gray-600 mb-4 prose"
-              dangerouslySetInnerHTML={{ __html: post.excerpt }} 
-            />
-            
-            <p className="text-sm text-gray-400">
-              {new Date(post.date).toLocaleDateString()}
-            </p>
-          </article>
-        ))}
+    <nav className="bg-black text-white p-4">
+      <div className="max-w-7xl mx-auto flex gap-6">
+        <Link href="/" className="font-bold text-xl text-red-500">
+          Astha News
+        </Link>
+        
+        <ul className="flex gap-4 items-center">
+          {activeCategories.map((category) => (
+            <li key={category.id}>
+              <Link 
+                href={`/${category.slug}`} 
+                className="hover:text-red-400 transition-colors capitalize"
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-    </main>
+    </nav>
   );
 }
