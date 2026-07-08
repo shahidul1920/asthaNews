@@ -3,7 +3,8 @@ import { fetchAPI } from '../../lib/api'; // Notice the two dots (../../) becaus
 
 export default async function CategoryPage({ params }) {
   // 1. Next.js extracts the category slug from the URL (e.g., "business")
-  const currentCategory = params.category;
+  const resolvedParams = await params;
+  const currentCategory = resolvedParams.category;
 
   // 2. We write our query to accept a dynamic variable ($categoryName)
   const GET_CATEGORY_NEWS = `
