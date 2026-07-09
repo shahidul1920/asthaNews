@@ -25,23 +25,29 @@ const Navber = async () => {
   const activeCategories = allCategories.filter(
     (cat) => cat.slug !== 'uncategorized' && cat.count > 0
   );
+  const now = new Date();
+  const formattedDate = now.toLocaleDateString('bn-BD', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   return (
     <div>
 
       {/* top navber section */}
       <section className='topHeader container mx-auto flex justify-between items-center py-[10px] px-[15px]'>
-        <div className="dates">
-          <p className='text-gray-400 text-[14px]'>ঢাকা, বুধবার ০৮ জুলাই ২০২৬<br />
-            ২৪ আষাঢ় ১৪৩৩</p>
+        <div className="dates font-bangali text-[16px]">
+          <p className='text-gray-400'>{formattedDate}</p>
         </div>
         <div className="logoSec">
           {/* <img src="./astha-logo.png" alt="" /> */}
-          <Image 
+          <Image
             src="/astha-logo.png"
             alt="Logo"
             width={100}
             height={100}
-            />
+          />
         </div>
         <div className="calender text-gray-400 text-[14px]">
           <button><CalendarHeartIcon /></button>
@@ -61,7 +67,7 @@ const Navber = async () => {
               <Link
                 key={category.id}
                 href={`/${category.slug}`}
-                className="text-black hover:text-white transition-colors"
+                className="text-black hover:text-white transition-colors font-poppins"
               >
                 {category.name}
               </Link>
