@@ -43,12 +43,13 @@ const Navber = async () => {
         </div>
         <div className="logoSec">
           {/* <img src="./astha-logo.png" alt="" /> */}
+          <Link href="/" className='flex items-center gap-2 text-black hover:text-red-500 transition-colors'>
           <Image
             src="/astha-logo.png"
             alt="Logo"
             width={100}
             height={100}
-          />
+          /></Link>
         </div>
         <div className="calender text-gray-400 text-[14px] w-30 flex justify-end">
           <CalendarToggle />
@@ -63,7 +64,7 @@ const Navber = async () => {
           </Link>
         </div>
         <div className="navberMenu">
-          <nav className='flex gap-4'>
+          <nav className='flex gap-10 justify-between'>
             {activeCategories.map((category) => (
               <Link
                 key={category.id}
@@ -73,6 +74,12 @@ const Navber = async () => {
                 {category.name}
               </Link>
             ))}
+            <Link
+              href="/about"
+              className="text-black hover:text-red transition-colors font-poppins"
+            >
+              About Us
+            </Link>
           </nav>
         </div>
       </section>
