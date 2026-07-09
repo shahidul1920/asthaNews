@@ -1,6 +1,6 @@
 // app/[category]/page.js
 import Image from "next/image";
-import { fetchAPI } from "../../lib/api"; // Notice the two dots (../../) because we are one folder deeper now!
+import { fetchAPI } from "../../lib/api";
 
 export default async function CategoryPage({ params }) {
   // 1. Next.js extracts the category slug from the URL (e.g., "business")
