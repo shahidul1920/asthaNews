@@ -7,7 +7,7 @@
 @theme inline {
   --font-bangali: var(--font-noto-bengali);
   --font-poppins: var(--font-poppins);
-  --red: var(--red);
+  --color-red: var(--red);
 }
 
 @media (prefers-color-scheme: dark) {
