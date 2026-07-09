@@ -52,7 +52,7 @@ const HeroNews = async () => {
           <div className="topNews border-r-0 lg:border-r lg:border-gray-300 lg:pr-6">
             {topStory ? (
               <Link
-                href={`/news/${topStory.slug}`}
+                href={`/news/${topStory.slug}?pid=${topStory.databaseId}`}
                 className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]"
               >
                 <div className="font-bangali grid grid-cols-1 gap-3">
@@ -91,7 +91,7 @@ const HeroNews = async () => {
           <div className="trandingNews grid gap-4 sm:grid-cols-2 xl:grid-cols-2 grid-rows-2">
             {trendingNews.map((post) => (
               <Link
-                href={`/news/${post.slug}`}
+                href={`/news/${post.slug}?pid=${post.databaseId}`}
                 key={post.id}
                 className="trandingNewsItem flex gap-3 rounded-lg border border-gray-100 bg-white p-3 shadow-sm"
               >

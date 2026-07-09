@@ -5,7 +5,8 @@ const GET_HERO_NEWS = `
     topNews: posts(where: { categoryName: "top-news" }, first: 1) {
       nodes {
         id
-        slug
+        databaseId
+          slug
         title
         date
         excerpt
@@ -20,7 +21,8 @@ const GET_HERO_NEWS = `
     trendingNews: posts(where: { categoryName: "trending" }, first: 4) {
       nodes {
         id
-        slug
+        databaseId
+          slug
         title
         date
         excerpt

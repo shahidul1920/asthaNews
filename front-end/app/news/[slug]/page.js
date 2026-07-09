@@ -1,11 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { fetchAPI } from "@/lib/api";
 
 const GET_POST_BY_SLUG = `
   query GetPostBySlug($slug: ID!) {
     post(id: $slug, idType: SLUG) {
+      id
+      slug
+      title
+      date
+      content
+      excerpt
+      featuredImage {
+        node {
+          sourceUrl
+          altText
+        }
+      }
+      categories {
+        nodes {
+          name
+          slug
+        }
+      }
+    }
+  }
+`;
+
+const GET_POST_BY_DATABASE_ID = `
+  query GetPostByDatabaseId($postId: ID!) {
+    post(id: $postId, idType: DATABASE_ID) {
       id
       slug
       title
@@ -44,18 +68,43 @@ function cleanHtml(htmlString = "") {
   return htmlString.replace(/<[^>]*>/g, "").trim();
 }
 
-export default async function PostPage({ params }) {
+export default async function PostPage({ params, searchParams }) {
   const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const postSlug = resolvedParams.slug;
+  const postId = resolvedSearchParams?.pid;
 
-  const data = await fetchAPI(GET_POST_BY_SLUG, {
-    variables: { slug: postSlug },
-  });
+  let data = null;
+
+  if (postId) {
+    data = await fetchAPI(GET_POST_BY_DATABASE_ID, {
+      variables: { postId },
+    });
+  }
+
+  if (!data?.post) {
+    data = await fetchAPI(GET_POST_BY_SLUG, {
+      variables: { slug: postSlug },
+    });
+  }
 
   const post = data?.post;
 
   if (!post) {
-    notFound();
+    return (
+      <main className="mx-auto max-w-4xl px-4 py-10 md:px-6">
+        <Link href="/" className="mb-6 inline-flex text-sm text-gray-500 hover:text-black">
+          Back to home
+        </Link>
+
+        <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+          <h1 className="text-3xl font-bold text-gray-900">Post not found</h1>
+          <p className="mt-3 text-gray-600">
+            The article for this URL could not be loaded from WordPress.
+          </p>
+        </div>
+      </main>
+    );
   }
 
   return (
