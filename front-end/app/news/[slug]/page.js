@@ -94,34 +94,6 @@ function cleanHtml(htmlString = "") {
   return htmlString.replace(/<[^>]*>/g, "").trim();
 }
 
-function getArticleMetadata(post) {
-  const metadata = post?.articleMetadata;
-
-  if (!metadata) {
-    return [];
-  }
-
-  return [
-    metadata.subheading && { label: "Subheading", value: metadata.subheading },
-    metadata.mainImageSourceInfo && {
-      label: "Main image source",
-      value: metadata.mainImageSourceInfo,
-    },
-    metadata.authorSubtitle && { label: "Author subtitle", value: metadata.authorSubtitle },
-    metadata.estimatedReadTime && {
-      label: "Estimated read time",
-      value: metadata.estimatedReadTime,
-    },
-    metadata.secndImage?.node?.sourceUrl && {
-      label: "Second image",
-      value: metadata.secndImage.node.sourceUrl,
-      isLink: true,
-    },
-    metadata.imageSource && { label: "Image source", value: metadata.imageSource },
-    metadata.videoSource && { label: "Video source", value: metadata.videoSource },
-  ].filter(Boolean);
-}
-
 export default async function PostPage({ params, searchParams }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
@@ -143,6 +115,17 @@ export default async function PostPage({ params, searchParams }) {
   }
 
   const post = data?.post;
+  const articleMetadata = post?.articleMetadata ?? {};
+  const {
+    subheading,
+    mainImageSourceInfo,
+    authorSubtitle,
+    estimatedReadTime,
+    secndImage,
+    imageSource,
+    videoSource,
+  } = articleMetadata;
+  const secondImageSourceUrl = secndImage?.node?.sourceUrl;
 
   if (!post) {
     return (
@@ -167,6 +150,14 @@ export default async function PostPage({ params, searchParams }) {
         Back to home
       </Link>
 
+      {/* <Image
+        src={secondImageSourceUrl}
+        alt={secndImage?.node.altText || post.title}
+        sizes="(max-width: 768px) 100vw, 896px"
+        className="object-cover"
+        fill
+      /> */}
+
       <article className="grid gap-6">
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2 text-sm text-gray-500">
@@ -177,30 +168,8 @@ export default async function PostPage({ params, searchParams }) {
             ))}
           </div>
           <h1 className="text-3xl font-bold leading-tight md:text-5xl">{post.title}</h1>
-          <p className="text-sm text-gray-500">{formatPostDate(post.date)}</p>
+          <p className="text-[18px] font-bangali text-gray-500">{formatPostDate(post.date)}</p>
         </div>
-
-        {getArticleMetadata(post).length > 0 && (
-          <section className="grid gap-3 rounded-2xl border border-gray-200 bg-gray-50 p-4 text-sm text-gray-700 md:grid-cols-2">
-            {getArticleMetadata(post).map((item) => (
-              <div key={item.label} className="space-y-1">
-                <p className="font-semibold text-gray-900">{item.label}</p>
-                {item.isLink ? (
-                  <a
-                    href={item.value}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="break-all text-gray-600 underline decoration-gray-300 underline-offset-2 hover:text-black"
-                  >
-                    {item.value}
-                  </a>
-                ) : (
-                  <p className="wrap-break-word text-gray-600">{item.value}</p>
-                )}
-              </div>
-            ))}
-          </section>
-        )}
 
         {post.featuredImage?.node?.sourceUrl && (
           <div className="relative aspect-video overflow-hidden rounded-2xl bg-gray-100">
