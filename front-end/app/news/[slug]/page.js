@@ -180,6 +180,9 @@ export default async function PostPage({ params, searchParams }) {
               sizes="(max-width: 768px) 100vw, 896px"
               className="object-cover"
             />
+            <p className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-1 text-center">
+              {mainImageSourceInfo}
+            </p>
           </div>
         )}
 

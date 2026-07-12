@@ -1,18 +1,25 @@
 @import "tailwindcss";
 
-:root {
-  --red: #E10327;
-}
 
-@theme inline {
-  --font-bangali: var(--font-noto-bengali);
-  --font-poppins: var(--font-poppins);
-  --color-red: var(--red);
+:root {
+  --theme-red: #E10327;
+  --borderGlob: #24232377;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --red: #E10327;
+
+    --theme-red: #E10327; 
+    --borderGlob: #24232377;
   }
 }
 
+
+@theme {
+  --font-bangali: var(--font-noto-bengali);
+  --font-poppins: var(--font-poppins);
+  
+
+  --color-brand: var(--theme-red);
+  --color-brandborder: var(--borderGlob);
+}
