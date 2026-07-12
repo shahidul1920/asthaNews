@@ -1,81 +1,158 @@
-// app/[category]/page.js
 import Image from "next/image";
-import { fetchAPI } from "../../lib/api";
+import Link from "next/link";
+import { fetchCategoryNews } from "../../lib/category-news";
+
+const fallbackImage = "/prothomalo-bangla_2026-07-09_nxgtx74x_bbm.avif";
+
+function cleanText(htmlString = "") {
+  return htmlString.replace(/<[^>]*>/g, "").trim();
+}
+
+function truncateText(text, maxLength = 180) {
+  if (!text || text.length <= maxLength) {
+    return text;
+  }
+
+  return `${text.slice(0, maxLength).trimEnd()}...`;
+}
+
+function formatPostDate(dateString) {
+  if (!dateString) {
+    return "";
+  }
+
+  return new Intl.DateTimeFormat("bn-BD", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(dateString));
+}
 
 export default async function CategoryPage({ params }) {
-  // 1. Next.js extracts the category slug from the URL (e.g., "business")
   const resolvedParams = await params;
   const currentCategory = resolvedParams.category;
 
-  // 2. We write our query to accept a dynamic variable ($categoryName)
-  const GET_CATEGORY_NEWS = `
-    query GetCategoryNews($categoryName: String!) {
-      posts(where: { categoryName: $categoryName }, first: 10) {
-        nodes {
-          id
-          title
-          date
-          excerpt
-          featuredImage {
-            node {
-              sourceUrl
-              altText
-            }
-          }
-        }
-      }
-    }
-  `;
+  const posts = await fetchCategoryNews(currentCategory);
+  const mainStory = posts[0];
+  const splitStories = posts.slice(1, 3);
+  const gridStories = posts.slice(3, 9);
 
-  // 3. We fetch the data, passing the URL slug in as the variable
-  const data = await fetchAPI(GET_CATEGORY_NEWS, {
-    variables: { categoryName: currentCategory },
-  });
-
-  const posts = data?.posts?.nodes || [];
+  const formattedCategory = currentCategory.replace(/-/g, " ");
 
   return (
-    <main className="p-10 max-w-4xl mx-auto">
-      {/* We use the category slug as the page title */}
-      <h1 className="text-4xl font-bold mb-8 capitalize">
-        {currentCategory} News
-      </h1>
+    <main className="mx-auto max-w-6xl px-4 py-8 md:px-6">
+      <section className="mb-6 flex flex-col gap-2 border-b border-brandborder pb-4">
+        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Category</p>
+        <h1 className="font-bangali text-3xl font-bold text-gray-900 md:text-4xl">
+          {formattedCategory}
+        </h1>
+      </section>
 
-      {/* If a category is empty (like your new one), we show a fallback message */}
-      {posts.length === 0
-        ? <p className="text-gray-500 text-lg">
+      {posts.length === 0 ? (
+        <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <p className="text-gray-500 text-lg">
             No news found in this category yet.
           </p>
-        : <div className="grid gap-6">
-            {posts.map((post) => (
-              <article
+        </div>
+      ) : (
+        <div className="rightSideNewsPnl font-bangali grid gap-6">
+          <section className="top1sec grid max-h-100 grid-cols-2 items-center gap-4 border-b border-brandborder pb-4 font-bangali">
+            <Link href={`/news/${mainStory.slug}?pid=${mainStory.databaseId}`} className="leftt h-full">
+              <Image
+                src={mainStory.featuredImage?.node?.sourceUrl || fallbackImage}
+                alt={mainStory.featuredImage?.node?.altText || mainStory.title}
+                width={350}
+                height={250}
+                className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </Link>
+            <div className="right">
+              <h3 className="text-[38px] font-bold text-gray-900">
+                {mainStory.title}
+              </h3>
+              <p>{truncateText(cleanText(mainStory.excerpt || ""), 220)}</p>
+              <p className="mt-4 text-[16px] text-gray-500">
+                {formatPostDate(mainStory.date)}
+              </p>
+            </div>
+          </section>
+
+          <section className="top2sec grid grid-cols-2 gap-4 border-b border-brandborder pb-4 font-bangali">
+            <div className="lefttNews grid grid-cols-2 gap-4 border-r border-brandborder pr-4">
+              <Link href={`/news/${splitStories[0]?.slug}?pid=${splitStories[0]?.databaseId || ""}`} className="image">
+                <Image
+                  src={splitStories[0]?.featuredImage?.node?.sourceUrl || fallbackImage}
+                  alt={splitStories[0]?.featuredImage?.node?.altText || splitStories[0]?.title || formattedCategory}
+                  width={350}
+                  height={250}
+                  className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </Link>
+              <div className="text">
+                <h3 className="text-[20px] font-bold text-gray-900">
+                  {splitStories[0]?.title || "No post available"}
+                </h3>
+                <p>{truncateText(cleanText(splitStories[0]?.excerpt || ""), 180)}</p>
+                <p className="mt-2 text-[16px] text-gray-500">
+                  {formatPostDate(splitStories[0]?.date)}
+                </p>
+              </div>
+            </div>
+
+            <div className="righttNews grid grid-cols-2 gap-4">
+              <Link href={`/news/${splitStories[1]?.slug}?pid=${splitStories[1]?.databaseId || ""}`} className="image">
+                <Image
+                  src={splitStories[1]?.featuredImage?.node?.sourceUrl || fallbackImage}
+                  alt={splitStories[1]?.featuredImage?.node?.altText || splitStories[1]?.title || formattedCategory}
+                  width={350}
+                  height={250}
+                  className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </Link>
+              <div className="text">
+                <h3 className="text-[20px] font-bold text-gray-900">
+                  {splitStories[1]?.title || "No post available"}
+                </h3>
+                <p>{truncateText(cleanText(splitStories[1]?.excerpt || ""), 180)}</p>
+                <p className="mt-2 text-[16px] text-gray-500">
+                  {formatPostDate(splitStories[1]?.date)}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="grid6sec grid grid-cols-3 grid-rows-2 gap-4 font-bangali">
+            {gridStories.map((post, index) => (
+              <Link
                 key={post.id}
-                className="p-6 bg-white border border-gray-200 rounded-lg shadow-sm"
+                href={`/news/${post.slug}?pid=${post.databaseId}`}
+                className={`flex flex-col gap-2 ${index + 1}`}
               >
-                <h2 className="text-2xl font-semibold mb-2">{post.title}</h2>
-
-                {post.featuredImage?.node?.sourceUrl && (
-                  <div className="relative mb-4 aspect-[16/9] w-full overflow-hidden rounded-md">
-                    <Image
-                      src={post.featuredImage.node.sourceUrl}
-                      alt={post.featuredImage.node.altText || post.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 768px"
-                      className="object-cover"
-                    />
-                  </div>
-                )}
-
-                <p className="text-gray-600 mb-4 prose">
-                  {post.excerpt ? post.excerpt.replace(/<[^>]*>/g, "") : ""}
-                </p>
-
-                <p className="text-sm text-gray-400">
-                  {new Date(post.date).toLocaleDateString()}
-                </p>
-              </article>
+                <div className="image">
+                  <Image
+                    src={post.featuredImage?.node?.sourceUrl || fallbackImage}
+                    alt={post.featuredImage?.node?.altText || post.title}
+                    width={350}
+                    height={250}
+                    className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div className="text">
+                  <h3 className="text-[20px] font-bold text-gray-900">
+                    {post.title}
+                  </h3>
+                  <p>{truncateText(cleanText(post.excerpt || ""), 180)}</p>
+                  <p className="mt-2 text-[16px] text-gray-500">
+                    {formatPostDate(post.date)}
+                  </p>
+                </div>
+              </Link>
             ))}
-          </div>}
+          </section>
+        </div>
+      )}
     </main>
   );
 }
