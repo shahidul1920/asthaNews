@@ -42,7 +42,7 @@ const Footer = async () => {
                 </div>
             </div>
 
-            <div className="border-b border-brandborder py-8 mb-10">
+            <div className="border-b border-brandborder py-8">
                 <div className="sectwo container mx-auto flex justify-between gap-8">
                     <div className="social">
                         <h4 className="text-[28px] font-semibold font-poppins">Follow Us</h4>
@@ -81,6 +81,41 @@ const Footer = async () => {
                             </a>
                         </div>
                     </div>
+
+                    <div className="contact">
+                        <h4 className="text-[28px] font-semibold font-poppins">Contact Us</h4>
+                        <div className="contactInfo mt-2">
+                            <p className='text-[18px] font-poppins'>Email: <a href="mailto:info@asthanews.com" className="text-black hover:text-red transition-colors">info@asthanews.com</a></p>
+                            <p className='text-[18px] font-poppins'>Phone: <a href="tel:+88099283993" className="text-black hover:text-red transition-colors">+880 992 839 93</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="border-b border-brandborder py-8">
+                <div className="secthree container mx-auto leading-0">
+                    <div className="brandDeals flex justify-center items-center gap-8">
+                        <Link href="/about" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                                About Us
+                        </Link>
+                        <Link href="/privacy-policy" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                                Privacy Policy
+                        </Link>
+                        <Link href="/advertising" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                                Advertising Policy
+                        </Link>
+                        <Link href="/news-letter" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                                News Letter
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            <div className="copyrightSec py-4">
+                <div className="container mx-auto flex flex-col text-center">
+                    <p className='text-[16px] font-poppins'>© 2026 Astha News. All rights reserved.</p>
+                    <p className='text-[16px] font-poppins'>Developed by <a href="https://www.redmun.com" target='_blank' className="text-brand">Redmun Digitech</a></p>
+
                 </div>
             </div>
 

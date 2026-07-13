@@ -45,7 +45,7 @@ export default async function CategoryPage({ params }) {
     <main className="mx-auto max-w-6xl px-4 py-8 md:px-6">
       <section className="mb-6 flex flex-col gap-2 border-b border-brandborder pb-4">
         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">Category</p>
-        <h1 className="font-bangali text-3xl font-bold text-gray-900 md:text-4xl">
+        <h1 className="font-bangali text-3xl font-bold text-gray-900 md:text-4xl uppercase">
           {formattedCategory}
         </h1>
       </section>

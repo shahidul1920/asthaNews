@@ -3,14 +3,14 @@
 
 :root {
   --theme-red: #E10327;
-  --borderGlob: #24232377;
+  --borderGlob: #3b3b3b1f;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
 
     --theme-red: #E10327; 
-    --borderGlob: #24232377;
+    --borderGlob: #3b3b3b1f;
   }
 }
 
