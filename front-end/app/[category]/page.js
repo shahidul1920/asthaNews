@@ -4,6 +4,19 @@ import { fetchCategoryNews } from "../../lib/category-news";
 
 const fallbackImage = "/prothomalo-bangla_2026-07-09_nxgtx74x_bbm.avif";
 
+export async function generateMetadata({ params }) {
+  const { category } = await params;
+  const title = category.replace(/-/g, " ");
+
+  return {
+    title: `${title} সংবাদ`,
+    description: `Astha News-এ ${title} বিভাগের সর্বশেষ খবর ও আপডেট পড়ুন।`,
+    alternates: {
+      canonical: `/${category}`,
+    },
+  };
+}
+
 function cleanText(htmlString = "") {
   return htmlString.replace(/<[^>]*>/g, "").trim();
 }

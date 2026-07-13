@@ -17,8 +17,11 @@ const values = [
 ];
 
 export const metadata = {
-  title: "About Us | Astha News",
-  description: "Learn more about Astha News.",
+  title: "আমাদের সম্পর্কে",
+  description: "Astha News-এর লক্ষ্য, মূল্যবোধ এবং আমাদের সম্পর্কে জানুন।",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

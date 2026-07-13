@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { cache } from "react";
 import { fetchAPI } from "@/lib/api";
+import { defaultDescription, siteName, siteUrl } from "@/lib/site";
 
 const GET_POST_BY_SLUG = `
   query GetPostBySlug($slug: ID!) {
@@ -9,6 +11,7 @@ const GET_POST_BY_SLUG = `
       slug
       title
       date
+      modified
       content
       excerpt
       articleMetadata {
@@ -47,6 +50,7 @@ const GET_POST_BY_DATABASE_ID = `
       slug
       title
       date
+      modified
       content
       excerpt
       articleMetadata {
@@ -94,12 +98,7 @@ function cleanHtml(htmlString = "") {
   return htmlString.replace(/<[^>]*>/g, "").trim();
 }
 
-export default async function PostPage({ params, searchParams }) {
-  const resolvedParams = await params;
-  const resolvedSearchParams = await searchParams;
-  const postSlug = resolvedParams.slug;
-  const postId = resolvedSearchParams?.pid;
-
+const fetchPost = cache(async (postSlug, postId) => {
   let data = null;
 
   if (postId) {
@@ -114,7 +113,58 @@ export default async function PostPage({ params, searchParams }) {
     });
   }
 
-  const post = data?.post;
+  return data?.post;
+});
+
+export async function generateMetadata({ params, searchParams }) {
+  const { slug } = await params;
+  const { pid } = await searchParams;
+  const post = await fetchPost(slug, pid);
+
+  if (!post) {
+    return {
+      title: "সংবাদ পাওয়া যায়নি",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const description = cleanHtml(post.excerpt) || defaultDescription;
+  const canonicalPath = `/news/${post.slug}`;
+  const image = post.featuredImage?.node?.sourceUrl;
+
+  return {
+    title: cleanHtml(post.title),
+    description,
+    alternates: { canonical: canonicalPath },
+    openGraph: {
+      type: "article",
+      locale: "bn_BD",
+      url: canonicalPath,
+      siteName,
+      title: cleanHtml(post.title),
+      description,
+      publishedTime: post.date,
+      modifiedTime: post.modified || post.date,
+      images: image
+        ? [{ url: image, alt: post.featuredImage.node.altText || cleanHtml(post.title) }]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: cleanHtml(post.title),
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
+
+export default async function PostPage({ params, searchParams }) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const postSlug = resolvedParams.slug;
+  const postId = resolvedSearchParams?.pid;
+
+  const post = await fetchPost(postSlug, postId);
   const articleMetadata = post?.articleMetadata ?? {};
   const {
     subheading,
@@ -159,6 +209,35 @@ export default async function PostPage({ params, searchParams }) {
       /> */}
 
       <article className="grid gap-6">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "NewsArticle",
+              headline: cleanHtml(post.title),
+              description: cleanHtml(post.excerpt),
+              datePublished: post.date,
+              dateModified: post.modified || post.date,
+              mainEntityOfPage: `${siteUrl}/news/${post.slug}`,
+              image: post.featuredImage?.node?.sourceUrl
+                ? [post.featuredImage.node.sourceUrl]
+                : undefined,
+              author: {
+                "@type": "Organization",
+                name: siteName,
+              },
+              publisher: {
+                "@type": "Organization",
+                name: siteName,
+                logo: {
+                  "@type": "ImageObject",
+                  url: `${siteUrl}/astha-logo.png`,
+                },
+              },
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
         <div className="space-y-3">
           <div className="flex flex-wrap gap-2 text-sm text-gray-500">
             {post.categories?.nodes?.map((category) => (
@@ -168,7 +247,9 @@ export default async function PostPage({ params, searchParams }) {
             ))}
           </div>
           <h1 className="text-3xl font-bold leading-tight md:text-5xl">{post.title}</h1>
-          <p className="text-[18px] font-bangali text-gray-500">{formatPostDate(post.date)}</p>
+          <time dateTime={post.date} className="text-[18px] font-bangali text-gray-500">
+            {formatPostDate(post.date)}
+          </time>
         </div>
 
         {post.featuredImage?.node?.sourceUrl && (
