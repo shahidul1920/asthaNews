@@ -10,8 +10,7 @@ export async function fetchAPI(query, { variables } = {}) {
       query,
       variables,
     }),
-    // 'no-store' ensures you see live updates while developing locally
-    cache: 'no-store',
+    next: { revalidate: 60 },
   });
 
   const json = await res.json();
