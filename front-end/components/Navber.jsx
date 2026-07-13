@@ -1,31 +1,11 @@
-import { fetchAPI } from '@/lib/api';
 import { Home } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link';
 import CalendarToggle from './CalendarToggle';
-
-
-
-const GET_ALL_CATEGORIES = `
-  query GetAllCategories {
-    categories(first: 100) {
-      nodes {
-        id
-        name
-        slug
-        count
-      }
-    }
-  }
-`
+import { fetchNavigationCategories } from '@/lib/categories';
 
 const Navber = async () => {
-  const data = await fetchAPI(GET_ALL_CATEGORIES);
-  const allCategories = data.categories.nodes;
-
-  const activeCategories = allCategories.filter(
-    (cat) => cat.slug !== 'uncategorized' && cat.count > 0
-  );
+  const activeCategories = await fetchNavigationCategories();
   const now = new Date();
   const formattedDate = now.toLocaleDateString('bn-BD', {
     weekday: 'long',
