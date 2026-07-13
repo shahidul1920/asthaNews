@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }) {
         </div>
       ) : (
         <div className="rightSideNewsPnl font-bangali grid gap-6">
-          <section className="top1sec grid max-h-100 grid-cols-2 items-center gap-4 border-b border-brandborder pb-4 font-bangali">
+          <section className="top1sec grid grid-cols-1 items-center gap-4 border-b border-brandborder pb-4 font-bangali sm:grid-cols-2 sm:max-h-100">
             <Link href={`/news/${mainStory.slug}?pid=${mainStory.databaseId}`} className="leftt h-full">
               <Image
                 src={mainStory.featuredImage?.node?.sourceUrl || fallbackImage}
@@ -69,7 +69,7 @@ export default async function CategoryPage({ params }) {
               />
             </Link>
             <div className="right">
-              <h3 className="text-[38px] font-bold text-gray-900">
+              <h3 className="text-2xl font-bold text-gray-900 md:text-[38px]">
                 {mainStory.title}
               </h3>
               <p>{truncateText(cleanText(mainStory.excerpt || ""), 220)}</p>
@@ -79,8 +79,8 @@ export default async function CategoryPage({ params }) {
             </div>
           </section>
 
-          <section className="top2sec grid grid-cols-2 gap-4 border-b border-brandborder pb-4 font-bangali">
-            <div className="lefttNews grid grid-cols-2 gap-4 border-r border-brandborder pr-4">
+          <section className="top2sec grid grid-cols-1 gap-4 border-b border-brandborder pb-4 font-bangali 2xl:grid-cols-2">
+            <div className="lefttNews grid grid-cols-1 gap-4 border-b border-brandborder pb-4 sm:grid-cols-2 2xl:border-b-0 2xl:border-r 2xl:pb-0 2xl:pr-4">
               <Link href={`/news/${splitStories[0]?.slug}?pid=${splitStories[0]?.databaseId || ""}`} className="image">
                 <Image
                   src={splitStories[0]?.featuredImage?.node?.sourceUrl || fallbackImage}
@@ -101,7 +101,7 @@ export default async function CategoryPage({ params }) {
               </div>
             </div>
 
-            <div className="righttNews grid grid-cols-2 gap-4">
+            <div className="righttNews grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Link href={`/news/${splitStories[1]?.slug}?pid=${splitStories[1]?.databaseId || ""}`} className="image">
                 <Image
                   src={splitStories[1]?.featuredImage?.node?.sourceUrl || fallbackImage}
@@ -123,7 +123,7 @@ export default async function CategoryPage({ params }) {
             </div>
           </section>
 
-          <section className="grid6sec grid grid-cols-3 grid-rows-2 gap-4 font-bangali">
+          <section className="grid6sec grid grid-cols-1 gap-6 font-bangali sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
             {gridStories.map((post, index) => (
               <Link
                 key={post.id}

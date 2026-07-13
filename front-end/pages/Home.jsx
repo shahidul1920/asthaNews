@@ -10,7 +10,7 @@ const Home = () => {
 
       {/* Main News Preview Panel */}
       <section className="mt-4">
-        <div className="container mx-auto grid gap-4 px-4 md:grid-cols-[320px_minmax(0,1fr)]">
+        <div className="container mx-auto grid gap-4 px-4 xl:grid-cols-[320px_minmax(0,1fr)]">
           <div className="left w-full">
             <LeftSideNewsPnl />
           </div>

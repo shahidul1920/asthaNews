@@ -9,7 +9,7 @@ const Footer = async () => {
     return (
         <>
             <div className='footerSec border-y border-brandborder py-12'>
-                <div className="container mx-auto">
+                <div className="container mx-auto px-4 md:px-6">
                     <div className="secOne flex flex-col">
                         <div className="logoSec mb-[1rem]">
                             <Image
@@ -19,20 +19,20 @@ const Footer = async () => {
                                 height={100}
                             />
                         </div>
-                        <div className="navberMenu leading-0 mt-[2rem]">
-                            <nav className='flex flex-wrap gap-10 max-w-[700px]'>
+                        <div className="navberMenu mt-8">
+                            <nav className='grid max-w-[700px] grid-cols-2 gap-x-4 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-4 md:gap-x-10'>
                                 {activeCategories.map((category) => (
                                     <Link
                                         key={category.id}
                                         href={`/${category.slug}`}
-                                        className="text-black text-[18px] hover:text-red transition-colors font-poppins"
+                                        className="text-sm text-black transition-colors hover:text-red sm:text-[18px] font-poppins"
                                     >
                                         {category.name}
                                     </Link>
                                 ))}
                                 <Link
                                     href="/about"
-                                    className="text-black text-[18px] hover:text-red transition-colors font-poppins"
+                                    className="text-sm text-black transition-colors hover:text-red sm:text-[18px] font-poppins"
                                 >
                                     About Us
                                 </Link>
@@ -43,11 +43,11 @@ const Footer = async () => {
             </div>
 
             <div className="border-b border-brandborder py-8">
-                <div className="sectwo container mx-auto flex justify-between gap-8">
+                <div className="sectwo container mx-auto flex flex-col justify-between gap-8 px-4 sm:flex-row md:px-6">
                     <div className="social">
-                        <h4 className="text-[28px] font-semibold font-poppins">Follow Us</h4>
-                        <div className="icons flex gap-4 mt-2">
-                            <a href="https://www.facebook.com" target='_blank' className='size-[50px] object-contain'>
+                        <h4 className="text-2xl font-semibold sm:text-[28px] font-poppins">Follow Us</h4>
+                        <div className="icons mt-2 flex gap-3 sm:gap-4">
+                            <a href="https://www.facebook.com" target='_blank' className='size-10 object-contain sm:size-[50px]'>
                                 <Image
                                     src='/facebook.png'
                                     width={50}
@@ -55,7 +55,7 @@ const Footer = async () => {
                                     alt='facebook icon'
                                 />
                             </a>
-                            <a href="https://www.x.com" target='_blank' className='size-[50px] object-contain'>
+                            <a href="https://www.x.com" target='_blank' className='size-10 object-contain sm:size-[50px]'>
                                 <Image
                                     src='/x.png'
                                     width={50}
@@ -63,7 +63,7 @@ const Footer = async () => {
                                     alt='x icon'
                                 />
                             </a>
-                            <a href="https://www.instagram.com" target='_blank' className='size-[50px] object-contain'>
+                            <a href="https://www.instagram.com" target='_blank' className='size-10 object-contain sm:size-[50px]'>
                                 <Image
                                     src='/insta.png'
                                     width={50}
@@ -71,7 +71,7 @@ const Footer = async () => {
                                     alt='instagram icon'
                                 />
                             </a>
-                            <a href="https://www.linkedin.com" target='_blank' className='size-[50px] object-contain'>
+                            <a href="https://www.linkedin.com" target='_blank' className='size-10 object-contain sm:size-[50px]'>
                                 <Image
                                     src='/linkedin.png'
                                     width={50}
@@ -83,28 +83,28 @@ const Footer = async () => {
                     </div>
 
                     <div className="contact">
-                        <h4 className="text-[28px] font-semibold font-poppins">Contact Us</h4>
+                        <h4 className="text-2xl font-semibold sm:text-[28px] font-poppins">Contact Us</h4>
                         <div className="contactInfo mt-2">
-                            <p className='text-[18px] font-poppins'>Email: <a href="mailto:info@asthanews.com" className="text-black hover:text-red transition-colors">info@asthanews.com</a></p>
-                            <p className='text-[18px] font-poppins'>Phone: <a href="tel:+88099283993" className="text-black hover:text-red transition-colors">+880 992 839 93</a></p>
+                            <p className='text-sm sm:text-[18px] font-poppins'>Email: <a href="mailto:info@asthanews.com" className="text-black hover:text-red transition-colors">info@asthanews.com</a></p>
+                            <p className='text-sm sm:text-[18px] font-poppins'>Phone: <a href="tel:+88099283993" className="text-black hover:text-red transition-colors">+880 992 839 93</a></p>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div className="border-b border-brandborder py-8">
-                <div className="secthree container mx-auto leading-0">
-                    <div className="brandDeals flex justify-center items-center gap-8">
-                        <Link href="/about" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                <div className="secthree container mx-auto px-4 md:px-6">
+                    <div className="brandDeals grid grid-cols-2 gap-x-4 gap-y-3 text-center sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-4">
+                        <Link href="/about" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
                                 About Us
                         </Link>
-                        <Link href="/privacy-policy" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                        <Link href="/privacy-policy" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
                                 Privacy Policy
                         </Link>
-                        <Link href="/advertising" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                        <Link href="/advertising" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
                                 Advertising Policy
                         </Link>
-                        <Link href="/news-letter" className='text-[18px] font-poppins hover:text-red transition-colors'>
+                        <Link href="/news-letter" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
                                 News Letter
                         </Link>
                     </div>
@@ -112,9 +112,9 @@ const Footer = async () => {
             </div>
 
             <div className="copyrightSec py-4">
-                <div className="container mx-auto flex flex-col text-center">
-                    <p className='text-[16px] font-poppins'>© 2026 Astha News. All rights reserved.</p>
-                    <p className='text-[16px] font-poppins'>Developed by <a href="https://www.redmun.com" target='_blank' className="text-brand">Redmun Digitech</a></p>
+                <div className="container mx-auto flex flex-col px-4 text-center md:px-6">
+                    <p className='text-xs sm:text-[16px] font-poppins'>© 2026 Astha News. All rights reserved.</p>
+                    <p className='text-xs sm:text-[16px] font-poppins'>Developed by <a href="https://www.redmun.com" target='_blank' className="text-brand">Redmun Digitech</a></p>
 
                 </div>
             </div>
