@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Astha News
 
-## Getting Started
+Astha News is a responsive Bengali digital-news frontend built with Next.js. It renders news, categories, navigation, and article details from a headless WordPress site through WPGraphQL.
 
-First, run the development server:
+## Features
+
+- Responsive layouts for mobile, tablet, and desktop
+- Headless WordPress/WPGraphQL content source
+- Dynamic category and article routes
+- Bengali typography with Noto Serif Bengali
+- Mobile navigation with close, outside-click, and Escape-key support
+- Search-engine metadata, canonical URLs, `robots.txt`, and dynamic sitemap
+- `NewsArticle` structured data for individual articles
+
+## Tech stack
+
+- Next.js 16 and React 19
+- Tailwind CSS 4
+- Biome for formatting and static checks
+- `next/image` for image optimization
+- WPGraphQL / WordPress API
+
+## Requirements
+
+- Node.js 20.9 or newer
+- npm
+- A WordPress site with the WPGraphQL endpoint enabled
+
+## Getting started
+
+Clone the repository and enter the frontend directory:
+
+```bash
+git clone <repository-url>
+cd asthaNews/front-end
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create a local environment file from the example:
+
+```bash
+copy .env.example .env.local
+```
+
+On macOS or Linux:
+
+```bash
+cp .env.example .env.local
+```
+
+Update `.env.local` with your values, then start development:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+> On Windows PowerShell installations that block `npm.ps1`, use `npm.cmd run dev` instead.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment variables
 
-## Learn More
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `NEXT_PUBLIC_WORDPRESS_API_URL` | Yes | Full URL of the WordPress WPGraphQL endpoint. |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | Public canonical site URL, for example `https://asthanews.com`. |
 
-To learn more about Next.js, take a look at the following resources:
+`NEXT_PUBLIC_SITE_URL` temporarily falls back to `https://asthanews.com` when omitted. Set it before production deployment if your final domain is different.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Never commit `.env.local` or API credentials.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Available scripts
 
-## Deploy on Vercel
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the local development server. |
+| `npm run build` | Create an optimized production build. |
+| `npm run start` | Run the production build locally. |
+| `npm run lint` | Run Biome checks. |
+| `npm run format` | Format project files with Biome. |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+app/
+  about/                 About page
+  news/[slug]/           Dynamic article page and article SEO metadata
+  [category]/            Dynamic category pages
+  layout.js              Global fonts, layout, and site metadata
+  robots.js              Generated robots.txt
+  sitemap.js             Generated sitemap.xml
+components/              Reusable UI components
+lib/
+  api.js                 WPGraphQL request helper
+  site.js                Site URL, name, and default SEO description
+pages/Home.jsx           Homepage composition
+public/                  Logos, icons, and fallback images
+```
+
+## Content model
+
+The frontend expects WordPress posts with:
+
+- `slug`, `title`, `date`, `modified`, `excerpt`, and `content`
+- A featured image (`sourceUrl`, `altText`)
+- Categories
+- Optional `articleMetadata` fields used by the article layout
+
+Navigation categories are controlled in [lib/categories.js](./lib/categories.js). Update `NAVIGATION_CATEGORY_SLUGS` when the WordPress category structure changes.
+
+## SEO
+
+The project currently generates:
+
+- Site-wide metadata and Open Graph/Twitter cards
+- Canonical URLs for home, categories, About, and articles
+- Article-specific metadata from WordPress content
+- `NewsArticle` JSON-LD on news pages
+- `/robots.txt`
+- `/sitemap.xml`, including paginated WordPress posts and active categories
+
+Before launch, update [lib/site.js](./lib/site.js) with the final brand description and configure `NEXT_PUBLIC_SITE_URL`. A dedicated 1200×630 Open Graph image is also recommended; the current logo is a temporary share image.
+
+## Production checklist
+
+- Set both environment variables in the hosting provider.
+- Ensure the WordPress GraphQL endpoint is reachable from the deployed app.
+- Verify every remote image host is allowed in [next.config.mjs](./next.config.mjs).
+- Visit `/robots.txt` and `/sitemap.xml` after deployment.
+- Submit the sitemap to Google Search Console and Bing Webmaster Tools.
+- Replace demo text on the About page and create the linked policy/newsletter pages.
+
+## Deployment
+
+Deploy to any platform that supports Next.js, such as Vercel. Add the environment variables in the platform settings, run `npm run build`, and serve the resulting Next.js application.
