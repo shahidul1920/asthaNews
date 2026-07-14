@@ -44,7 +44,7 @@ const HeroNews = async () => {
 
   return (
     <div className="pt-8">
-      <section className="container mx-auto bg-red-50">
+      <section className="container mx-auto bg-red-50 border border-brandborder rounded-xl overflow-hidden">
         <div className="headerHeroImage w-full overflow-hidden">
           <Image
             src={headerHeroImage}
@@ -73,9 +73,9 @@ const HeroNews = async () => {
                   <span className="text-sm text-gray-500">
                     {formatHeroDate(topStory.date)}
                   </span>
-                </div>
+                </div>                
 
-                <div className="image relative aspect-16/10 overflow-hidden rounded-lg bg-gray-100">
+                <div className="image relative aspect-16/12 overflow-hidden rounded-lg bg-gray-100">
                   <Image
                     src={
                       topStory.featuredImage?.node?.sourceUrl || fallbackImage

@@ -22,7 +22,7 @@ const NAVIGATION_CATEGORY_SLUGS = new Set([
   'last-updates',
   'politics',
   'sports',
-  'technologia',
+  'technology',
   'trending',
 ]);
 
