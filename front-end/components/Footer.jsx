@@ -104,7 +104,7 @@ const Footer = async () => {
                         <Link href="/advertising" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
                                 Advertising Policy
                         </Link>
-                        <Link href="/news-letter" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
+                        <Link href="/newsletter" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
                                 News Letter
                         </Link>
                     </div>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { fetchHeroNews } from "@/lib/hero-news";
+import { fetchPromotionalImage } from "@/lib/promotional-image";
 
 const fallbackImage = "/prothomalo-bangla_2026-07-09_nxgtx74x_bbm.avif";
 
@@ -32,17 +33,24 @@ function truncateText(text, maxLength = 140) {
 
 const HeroNews = async () => {
   const { topNews, trendingNews } = await fetchHeroNews();
+  const promotionalImagePost = await fetchPromotionalImage();
   const topStory = topNews[0];
+  const headerHeroImage =
+    promotionalImagePost?.featuredImage?.node?.sourceUrl || fallbackImage;
+  const headerHeroImageAlt =
+    promotionalImagePost?.featuredImage?.node?.altText ||
+    promotionalImagePost?.title ||
+    "Hero Image";
 
   return (
     <div className="pt-8">
       <section className="container mx-auto bg-red-50">
         <div className="headerHeroImage w-full overflow-hidden">
           <Image
-            src="/Hompage-banner2-Desktop.webp"
-            alt="Hero Image"
-            width={1120}
-            height={432}
+            src={headerHeroImage}
+            alt={headerHeroImageAlt}
+            width={1248}
+            height={80}
             className="w-full object-cover"
             priority
           />
