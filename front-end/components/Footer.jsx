@@ -12,12 +12,14 @@ const Footer = async () => {
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="secOne flex flex-col">
                         <div className="logoSec mb-[1rem]">
-                            <Image
-                                src="/name-lg.png"
-                                alt="Logo"
-                                width={200}
-                                height={100}
-                            />
+                            <Link href="/" className='flex items-center gap-2'>
+                                <Image
+                                    src="/name-lg.png"
+                                    alt="Logo"
+                                    width={200}
+                                    height={100}
+                                />
+                            </Link>
                         </div>
                         <div className="navberMenu mt-8">
                             <nav className='grid max-w-[700px] grid-cols-2 gap-x-4 gap-y-3 sm:flex sm:flex-wrap sm:gap-x-6 sm:gap-y-4 md:gap-x-10'>
@@ -96,16 +98,16 @@ const Footer = async () => {
                 <div className="secthree container mx-auto px-4 md:px-6">
                     <div className="brandDeals grid grid-cols-2 gap-x-4 gap-y-3 text-center sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-4">
                         <Link href="/about" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
-                                About Us
+                            About Us
                         </Link>
                         <Link href="/privacy-policy" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
-                                Privacy Policy
+                            Privacy Policy
                         </Link>
                         <Link href="/advertising" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
-                                Advertising Policy
+                            Advertising Policy
                         </Link>
                         <Link href="/newsletter" className='text-sm font-poppins hover:text-red transition-colors sm:text-[18px]'>
-                                News Letter
+                            News Letter
                         </Link>
                     </div>
                 </div>
