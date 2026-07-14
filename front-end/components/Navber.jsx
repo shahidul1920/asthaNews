@@ -23,7 +23,7 @@ const Navber = async () => {
           {headerNews.map((post) => (
             <div key={post.id} className="headerNews">
               <Link href={`/news/${post.slug}?pid=${post.databaseId}`} className='flex items-center font-bangali text-gray-700 hover:text-red-500 transition-colors gap-2'>
-                <h3 className='w-[200px] flex-1 font-semibold'>{post.title}</h3>
+                <h3 className='line-clamp-2 max-w-[150px] flex-1 font-semibold'>{post.title}</h3>
                 <Image
                   src={post.featuredImage?.node?.sourceUrl || '/default-image.jpg'}
                   alt={post.title}
@@ -45,7 +45,7 @@ const Navber = async () => {
                 href={`/news/${headerNews[0].slug}?pid=${headerNews[0].databaseId}`}
                 className='flex items-center font-bangali text-gray-700 hover:text-red-500 transition-colors gap-2'
               >
-                <h3 className='max-w-[150px] flex-1 font-semibold'>{headerNews[0].title}</h3>
+                <h3 className='line-clamp-2 max-w-[150px] flex-1 font-semibold'>{headerNews[0].title}</h3>
                 <Image
                   src={headerNews[0].featuredImage?.node?.sourceUrl || '/default-image.jpg'}
                   alt={headerNews[0].title}

@@ -23,3 +23,7 @@
   --color-brand: var(--theme-red);
   --color-brandborder: var(--borderGlob);
 }
+
+img{
+  border-radius: 10px;
+}

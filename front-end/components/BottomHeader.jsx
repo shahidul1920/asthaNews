@@ -44,7 +44,7 @@ const BottomHeader = ({ activeCategories }) => {
           isPinned ? 'fixed top-0 left-0 right-0 shadow-md' : 'relative'
         }`}
       >
-        <div className="bottomHeader container mx-auto flex items-center justify-between px-4 py-2.5 md:px-6">
+        <div className="bottomHeader container mx-auto flex items-center justify-between px-4 py-4 md:px-6 border-b border-brandborder">
           <div className="homeBtn hidden lg:block">
             <Link href="/" className='flex items-center gap-2 text-black hover:text-red-500 transition-colors'>
               <Home />
