@@ -149,7 +149,7 @@ export default async function CategoryPage({ params }) {
                     alt={post.featuredImage?.node?.altText || post.title}
                     width={350}
                     height={250}
-                    className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
                 <div className="text">

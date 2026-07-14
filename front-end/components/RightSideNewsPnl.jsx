@@ -121,7 +121,7 @@ const RightSideNewsPnl = async () => {
                             alt={gridStories[0]?.featuredImage?.node?.altText || gridStories[0]?.title || "main new preview"}
                             width={350}
                             height={250}
-                            className="object-cover size-full transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                         />
                     </div>
                     <div className="text">
@@ -143,7 +143,7 @@ const RightSideNewsPnl = async () => {
                             alt={gridStories[1]?.featuredImage?.node?.altText || gridStories[1]?.title || "main new preview"}
                             width={350}
                             height={250}
-                            className="object-cover size-full transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                         />
                     </div>
                     <div className="text">
@@ -165,7 +165,7 @@ const RightSideNewsPnl = async () => {
                             alt={gridStories[2]?.featuredImage?.node?.altText || gridStories[2]?.title || "main new preview"}
                             width={350}
                             height={250}
-                            className="object-cover size-full transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                         />
                     </div>
                     <div className="text">
@@ -187,7 +187,7 @@ const RightSideNewsPnl = async () => {
                             alt={gridStories[3]?.featuredImage?.node?.altText || gridStories[3]?.title || "main new preview"}
                             width={350}
                             height={250}
-                            className="object-cover size-full transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                         />
                     </div>
                     <div className="text">
@@ -209,7 +209,7 @@ const RightSideNewsPnl = async () => {
                             alt={gridStories[4]?.featuredImage?.node?.altText || gridStories[4]?.title || "main new preview"}
                             width={350}
                             height={250}
-                            className="object-cover size-full transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                         />
                     </div>
                     <div className="text">
@@ -231,7 +231,7 @@ const RightSideNewsPnl = async () => {
                             alt={gridStories[5]?.featuredImage?.node?.altText || gridStories[5]?.title || "main new preview"}
                             width={350}
                             height={250}
-                            className="object-cover size-full transition-transform duration-300 group-hover:scale-105"
+                            className="object-cover aspect-[16/9] transition-transform duration-300 group-hover:scale-105"
                         />
                     </div>
                     <div className="text">
